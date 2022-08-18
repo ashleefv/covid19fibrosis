@@ -662,9 +662,10 @@ void macrophage_phenotype( Cell* pCell, Phenotype& phenotype, double dt )
 		{
 			pTestCell = neighbors[n]; 
 			int nP  = pTestCell->custom_data.find_variable_index( "viral_protein" ); //(Adrianne) finding the viral protein inside cells
+			static int residual_type = get_cell_definition( "residual" ).type;
 			// if it is not me and not a macrophage 
 			if( pTestCell != pCell && pTestCell->phenotype.death.dead == true &&  
-				UniformRandom() < probability_of_phagocytosis ) // && // remove in v 3.2 
+				UniformRandom() < probability_of_phagocytosis && pTestCell->type != residual_type ) // && // remove in v 3.2
 	//			pTestCell->phenotype.volume.total < max_phagocytosis_volume ) / remove in v 3.2 
 			{
 				{
