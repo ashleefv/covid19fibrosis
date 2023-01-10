@@ -11,18 +11,44 @@ import os
 import seaborn as sns
 from pylab import  array, linspace, subplots
 
-path = 'C:/Users/maislam4/OneDrive - University at Buffalo/Desktop/PhysiCell_R/Final_updated/replicate_61/'
-group = "replicate_61"
+'''
+root_directory = os.getcwd()
+try:
+    os.chdir('..\DM')
+except:
+    os.chdir('..\ ')
+    os.mkdir('DM')
+    try:
+        os.chdir('DM')
+    except:
+        print('No folder found!!!')
+
+
+
+print(os.getcwd())
+input('')
+'''
+
+######### user input #############
+group = 'DM'
 replication = 15
+
+root_directory = os.getcwd()
+try:
+    os.chdir(group)
+except:
+    print('No folder found! Add a template directory and run simulation file')
+
 collagen_area = np.zeros(replication)
+
+path = root_directory+ '\\' + group + '\\'
 
 for replication in range(replication):
     itc = replication + 1
-    path1 = path + str(itc) + '/output/'
+    path1 = path + str(itc) + '\output'
     os.chdir(path1)
     xml_files = glob.glob('output*.xml')
     xml_files.sort()
-    #print(xml_files)
 
     n = len(xml_files)
     t = np.zeros(n)
@@ -37,6 +63,11 @@ for replication in range(replication):
     collagen = np.zeros(n)
     TGF = np.zeros(n)
     pro = np.zeros(n)
+    M1 = np.zeros(n)
+    M2 = np.zeros(n)
+    MI = np.zeros(n)
+    MH = np.zeros(n)
+    ME = np.zeros(n)
     idx = 0
     TGFa = [[] for _ in range(n)]
     collagena = [[] for _ in range(n)]
@@ -48,6 +79,18 @@ for replication in range(replication):
 
         cycle = mcds.data['discrete_cells']['cycle_model']
         cycle = cycle.astype(int)
+        phase = mcds.data['discrete_cells']['ability_to_phagocytose_infected_cell']
+        phase = phase.astype(int)
+        active = mcds.data['discrete_cells']['activated_immune_cell']
+        active = active.astype(int)
+        ex = mcds.data['discrete_cells']['M2_phase']
+        ex = ex.astype(int)
+        ex2 = mcds.data['discrete_cells']['total_volume']
+        ex2 = ex2.astype(int)
+        cell_type = mcds.data['discrete_cells']['cell_type']
+        cell_type = cell_type.astype(int)
+
+
         ID_uninfected = np.where((mcds.data['discrete_cells']['assembled_virion'] < 1) & (cycle < 100) & (
                     mcds.data['discrete_cells']['cell_type'] == 1))
         ID_infected = np.where((mcds.data['discrete_cells']['assembled_virion'] >= 1) & (cycle < 100) & (
@@ -70,6 +113,17 @@ for replication in range(replication):
 
         ID_secreting_agent = np.where((cycle < 100) & (mcds.data['discrete_cells']['cell_type'] == 9))
         secreting_agent[idx] = len(ID_secreting_agent[0])
+
+        mac1 = np.where((cell_type == 4) & (cycle < 100) & (active == 1) & (ex == 0))
+        M1[idx] = len(mac1[0])
+        mac2 = np.where((cell_type == 4) & (cycle < 100) & (ex == 1))
+        M2[idx] = len(mac2[0])
+        mac3 = np.where((cell_type == 4) & (cycle < 100) & (active == 0))
+        MI[idx] = len(mac3[0])
+        mac4 = np.where((cell_type == 4) & (cycle < 100) & (phase == 1))
+        MH[idx] = len(mac4[0])
+        mac5 = np.where((cell_type == 4) & (cycle < 100) & (ex2 > 6500))
+        ME[idx] = len(mac5[0])
 
         z_val = 0.00
         sum = 0.0
@@ -106,39 +160,16 @@ for replication in range(replication):
         idx += 1
 
 
-    cell1 = np.array([CD8, macrophage, secreting_agent, fibroblast, uninfected, infected, dead, TGF, collagen])
+    cell1 = np.array([CD8, macrophage, secreting_agent, fibroblast, uninfected, infected, dead, TGF, collagen, M1, M2, MI, MH, ME])
 
-    path2 = path + 'plot/'
-    os.chdir(path2)
+    path2 = path + '\plot'
+    try:
+        os.chdir(path2)
+    except:
+        os.mkdir('plot')
+        os.chdir(path2)
     pickle.dump(t / (60 * 24), open('time.p', 'wb'))
     pickle.dump(cell1, open('cell'+str(itc)+'.p', 'wb'))
-    #pickle.dump(collagena, open('collagena1.p', 'wb'))
-    #pickle.dump(TGFa, open('TGFa1.p', 'wb'))
-    #pickle.dump(timea, open('timea1.p', 'wb'))
-
-    plt.rcParams.update({'font.size': 25})
-    fig1, ax1 = plt.subplots()
-    #plt.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
-    ax1.plot(timea, TGFa, linewidth=2)
-    ax1.set_xlabel('Time (day)')
-    ax1.set_ylabel('TGF-β ($ng/mL$)')
-    ax1.set_ylim([-0.25, 11])
-
-    pathT = 'C:/Users/maislam4/OneDrive - University at Buffalo/Desktop/PhysiCell_R/Final_updated/plot/TGF/'
-    os.chdir(pathT)
-    fig1.savefig(group + str(itc)+".png", dpi=300, bbox_inches='tight')
-
-    plt.rcParams.update({'font.size': 25})
-    fig2, ax2 = plt.subplots()
-    #plt.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
-    ax2.plot(timea, collagena, linewidth=2)
-    ax2.set_xlabel('Time (day)')
-    ax2.set_ylabel('Collagen ($μg/μm^3$)')
-    #plt.ylim([-0.25e-12, 11e-12])
-
-    pathC = 'C:/Users/maislam4/OneDrive - University at Buffalo/Desktop/PhysiCell_R/Final_updated/plot/Collagen/'
-    os.chdir(pathC)
-    fig2.savefig(group + str(itc)+".png", dpi=300, bbox_inches='tight')
 
     os.chdir(path1)
     # Seaborn heatmap
@@ -185,57 +216,20 @@ for replication in range(replication):
     plt.xticks(np.arange(0, 42, step=5))
     plt.yticks(np.arange(0, 42, step=5))
 
-    pathCC = 'C:/Users/maislam4/OneDrive - University at Buffalo/Desktop/PhysiCell_R/Final_updated/plot/Collagen_contour/'
-    os.chdir(pathCC)
+    pathC = path + '\Collagen_contour'
+    try:
+        os.chdir(pathC)
+    except:
+        os.mkdir('Collagen_contour')
+        os.chdir(pathC)
     plt.savefig(group + str(itc)+".png", dpi=300, bbox_inches='tight')
 
-pathCV = 'C:/Users/maislam4/OneDrive - University at Buffalo/Desktop/PhysiCell_R/Final_updated/plot/Collagen_violin/'
-os.chdir(pathCV)
+
+pathCV = path + '\Collagen_violin'
+try:
+    os.chdir(pathCV)
+except:
+    os.mkdir('Collagen_violin')
+    os.chdir(pathCV)
+
 pickle.dump(collagen_area, open('CV'+group+'.p', 'wb'))
-
-
-'''
-#pickle.dump(CD8 + macrophage + neutrophil + infected, open('totalIL6.p', 'wb'))
-plt.rcParams.update({'font.size': 25})
-#plt.plot(t/(60*24),uninfected, label='uninfected', linewidth=2)
-#plt.plot(t/(60*24),infected, label='infected', linewidth=2)
-#plt.plot(t/(60*24),dead, label='dead', linewidth=2)
-#plt.plot(t/(60*24),(uninfected + infected + dead), label='Total', linewidth=2)
-#plt.plot(t/(60*24),(uninfected[0] - uninfected - infected), label='Total dead', linewidth=2)
-plt.plot(t / (60 * 24), cell1[0], label='CD8+ T cells', linewidth=2)
-plt.plot(t / (60 * 24), cell1[1], label='Macrophage', linewidth=2)
-plt.plot(t / (60 * 24), cell1[2], label='Secreting agent', linewidth=2)
-#plt.plot(t / (60 * 24), infected, label='infected', linewidth=2)
-#plt.plot(t / (60 * 24), CD8 + macrophage + neutrophil + infected, label='Total', linewidth=2)
-
-plt.plot(t/(60*24),cell1[3], label='Fibroblast', linewidth=2)
-plt.legend(loc='upper left')
-plt.xlabel('Time (day)')
-plt.ylabel('Number of Cells')
-plt.show()
-
-
-
-plt.rcParams.update({'font.size': 25})
-plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0))
-plt.plot(timea, TGFa, linewidth=2)
-plt.xlabel('Time (day)')
-plt.ylabel('TGF-β ($ng/μm^3$)')
-plt.ylim([-0.25e-12,11e-12])
-plt.show()
-
-plt.rcParams.update({'font.size': 25})
-plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0))
-plt.plot(t / (60 * 24), cell1[7], linewidth=2)
-plt.xlabel('Time (day)')
-plt.ylabel('TGF-β ($ng/μm^3$)')
-plt.ylim([-0.25e-12,11e-12])
-plt.show()
-
-plt.rcParams.update({'font.size': 25})
-plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0))
-plt.plot(t / (60 * 24), cell1[8], linewidth=2)
-plt.xlabel('Time (day)')
-plt.ylabel('Collagen')
-plt.show()
-'''

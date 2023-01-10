@@ -620,6 +620,7 @@ void macrophage_phenotype( Cell* pCell, Phenotype& phenotype, double dt )
 		if( pContactCell != pCell && pContactCell->phenotype.death.dead == false && pContactCell->type == CD8_Tcell_type 
 			&& pCell->custom_data["activated_immune_cell"] > 0.5 && cell_cell_distance<=parameters.doubles("epsilon_distance")*(radius_mac+radius_test_cell)) 
 		{
+			pCell->custom_data["M2_phase"] = 1;
 			phenotype.secretion.secretion_rates[proinflammatory_cytokine_index] = 0;// Contact with CD8 T cell turns off pro-inflammatory cytokine secretion
 			//phenotype.secretion.secretion_rates[antiinflammatory_cytokine_index] = pCell->custom_data["antiinflammatory_cytokine_secretion_rate_by_macrophage"];// and turns on anti-inflammatory cytokine secretion
 			pCell->phenotype.secretion.net_export_rates[antiinflammatory_cytokine_index] = pCell->custom_data["antiinflammatory_cytokine_secretion_rate_by_macrophage"];
@@ -662,13 +663,13 @@ void macrophage_phenotype( Cell* pCell, Phenotype& phenotype, double dt )
 		{
 			pTestCell = neighbors[n]; 
 			int nP  = pTestCell->custom_data.find_variable_index( "viral_protein" ); //(Adrianne) finding the viral protein inside cells
+			int nR  = pTestCell->custom_data.find_variable_index( "viral_RNA" );
 			static int residual_type = get_cell_definition( "residual" ).type;
 			// if it is not me and not a macrophage 
 			if( pTestCell != pCell && pTestCell->phenotype.death.dead == true &&  
-				UniformRandom() < probability_of_phagocytosis && pTestCell->type != residual_type ) // && // remove in v 3.2
+				UniformRandom() < probability_of_phagocytosis && pTestCell->type != residual_type) // && // remove in v 3.2
 	//			pTestCell->phenotype.volume.total < max_phagocytosis_volume ) / remove in v 3.2 
 			{
-				{
 					// (Adrianne) obtain volume of cell to be ingested
 					double volume_ingested_cell = pTestCell->phenotype.volume.total;
 					
@@ -678,7 +679,7 @@ void macrophage_phenotype( Cell* pCell, Phenotype& phenotype, double dt )
 					double time_to_ingest = volume_ingested_cell*material_internalisation_rate;// convert volume to time taken to phagocytose
 					// (Adrianne) update internal time vector in macrophages that tracks time it will spend phagocytosing the material so they can't phagocytose again until this time has elapsed
 					pCell->custom_data.variables[time_to_next_phagocytosis_index].value = PhysiCell_globals.current_time+time_to_ingest;				
-				}	
+
 
 				// activate the cell 
 				phenotype.secretion.secretion_rates[proinflammatory_cytokine_index] = 
@@ -694,7 +695,7 @@ void macrophage_phenotype( Cell* pCell, Phenotype& phenotype, double dt )
 					
 				pCell->custom_data["activated_immune_cell"] = 1.0; 
 				
-				return; 
+				return;
 			}
 			else if( pTestCell != pCell && pCell->custom_data["ability_to_phagocytose_infected_cell"]== 1 && pTestCell->custom_data[nP]>1 &&
 				UniformRandom() < probability_of_phagocytosis ) // (Adrianne) macrophages that have been activated by T cells can phagocytose infected cells that contain at least 1 viral protein

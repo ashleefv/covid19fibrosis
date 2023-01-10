@@ -16,31 +16,42 @@ import matplotlib.pyplot as plt
 
 tspan = [0, 0, 0.07, 0.97, 10]
 #tspan = [0*1e-12, 0.07*1e-12, 0.97*1e-12, 10*1e-12]
-Ca_data = [5.01, 8.03, 8.55, 13.04, 22.56]
+Ca_data = [5.01, 8.03, 8.55, 13.04, 22.928]
+
+# (M(T_beta))
+#tspan = [0.05, 0.1, 0.5, 1, 10]
+#Ca_data = [30.2, 60.5, 123.3, 90.3, 80.5]
+
+#tspan = [0.04, 0.07, 0.48, 0.96, 10]
+#Ca_data = [30.2, 60.5, 123.3, 90.3, 80.5]
 
 calculated_data = []
 
-tspan1 = np.arange(0.0, 10, 0.001)
+tspan1 = np.arange(0.0, 15, 0.001)
 print(tspan1)
 for i in tspan1:
         tb = i
         FgTb = 0.0492*math.pow(tb,3) - 0.9868*math.pow(tb,2) + 6.5408*tb + 7.1092
+        #FgTb = 0.3350 * math.pow(tb, 3) - 6.3095 * math.pow(tb, 2) + 32.2810 * tb + 57.3019
         calculated_data.append(FgTb)
 
 print(calculated_data[-1])
-plt.scatter(tspan, Ca_data)
-plt.plot(tspan1,calculated_data)
-plt.show()
+#plt.scatter(tspan, Ca_data)
+#plt.plot(tspan1,calculated_data)
+#plt.show()
 
 plt.rcParams.update({'font.size': 25})
 plt.plot(tspan, Ca_data, 'ro', label='data', markersize=12)
 plt.plot(tspan1,calculated_data, 'b-', label='fit', linewidth=3)
+plt.axvline(x = 10, color = 'black', label = 'threshold', linewidth=3)
+plt.hlines(22.928, 10, 15, color='green', linewidth=3)
 plt.legend(loc='best')
 plt.xlabel('TGF-β $(ng/mL)$')
 #plt.ylabel('$F_c(T_β)$')
 plt.ylabel('$F_g(T_β)$')
+#plt.ylabel('$M(T_β)$')
 #plt.xscale('log')
-#plt.ylim(0,30)
+plt.ylim(-2,50)
 plt.savefig("COVID_fitting.png", dpi=300, bbox_inches='tight')
 plt.show()
 

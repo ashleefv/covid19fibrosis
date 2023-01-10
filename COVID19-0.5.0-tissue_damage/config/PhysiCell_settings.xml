@@ -538,6 +538,8 @@
 				<ability_to_phagocytose_infected_cell units="dimensionless" type="int"
 					description="Boolean for whether macrophages can phagocytose infected cells">0</ability_to_phagocytose_infected_cell>
 				<!-- (adrianne) time (mins) after DC activation when it will leave tissue, assigned uniform random variable at activation--> 
+				<M2_phase units="dimensionless" type="int"
+					description="Boolean for whether macrophages can phagocytose infected cells">0</M2_phase>
 				<time_of_DC_departure units="min" type="double"
 					description="Time DC leaves tissue after activation">0</time_of_DC_departure>
 <!--
@@ -899,7 +901,7 @@
 
 				<secretion>
 					<substrate name="anti-inflammatory cytokine">
-						<uptake_rate units="1/min">0</uptake_rate>
+						<uptake_rate units="1/min">0.1</uptake_rate>
 					</substrate> 	
 					<substrate name="collagen">
 						<uptake_rate units="1/min">0</uptake_rate>
@@ -918,7 +920,7 @@
 				</mechanics>
 				<death>
 					<model code="100" name="apoptosis"> 
-						<death_rate units="1/min">0.001</death_rate> <!-- 5e-4 --> 
+						<death_rate units="1/min">0.001</death_rate> <!-- 5e-4 -->
 					</model> 
 				</death>
 				<motility>  
