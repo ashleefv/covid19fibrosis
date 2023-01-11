@@ -1,5 +1,5 @@
 import glob
-from Butyrate.mcds.pyMCDS import pyMCDS
+from pyMCDS import pyMCDS
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
@@ -11,23 +11,6 @@ import os
 import seaborn as sns
 from pylab import  array, linspace, subplots
 
-'''
-root_directory = os.getcwd()
-try:
-    os.chdir('..\DM')
-except:
-    os.chdir('..\ ')
-    os.mkdir('DM')
-    try:
-        os.chdir('DM')
-    except:
-        print('No folder found!!!')
-
-
-
-print(os.getcwd())
-input('')
-'''
 
 ######### user input #############
 group = 'DM'
@@ -42,6 +25,25 @@ except:
 collagen_area = np.zeros(replication)
 
 path = root_directory+ '\\' + group + '\\'
+
+path2 = path + 'plot'
+try:
+    os.chdir(path2)
+except:
+    os.mkdir('plot')
+
+pathC = path + 'Collagen_contour'
+try:
+    os.chdir(pathC)
+except:
+    os.mkdir('Collagen_contour')
+
+os.chdir(root_directory)
+pathCV = root_directory +'\\' + 'Collagen_violin'
+try:
+    os.chdir(pathCV)
+except:
+    os.mkdir('Collagen_violin')
 
 for replication in range(replication):
     itc = replication + 1
@@ -162,12 +164,8 @@ for replication in range(replication):
 
     cell1 = np.array([CD8, macrophage, secreting_agent, fibroblast, uninfected, infected, dead, TGF, collagen, M1, M2, MI, MH, ME])
 
-    path2 = path + '\plot'
-    try:
-        os.chdir(path2)
-    except:
-        os.mkdir('plot')
-        os.chdir(path2)
+
+    os.chdir(path2)
     pickle.dump(t / (60 * 24), open('time.p', 'wb'))
     pickle.dump(cell1, open('cell'+str(itc)+'.p', 'wb'))
 
@@ -216,20 +214,11 @@ for replication in range(replication):
     plt.xticks(np.arange(0, 42, step=5))
     plt.yticks(np.arange(0, 42, step=5))
 
-    pathC = path + '\Collagen_contour'
-    try:
-        os.chdir(pathC)
-    except:
-        os.mkdir('Collagen_contour')
-        os.chdir(pathC)
+    os.chdir(pathC)
     plt.savefig(group + str(itc)+".png", dpi=300, bbox_inches='tight')
+    plt.clf()
 
 
-pathCV = path + '\Collagen_violin'
-try:
-    os.chdir(pathCV)
-except:
-    os.mkdir('Collagen_violin')
-    os.chdir(pathCV)
+os.chdir(pathCV)
 
 pickle.dump(collagen_area, open('CV'+group+'.p', 'wb'))
