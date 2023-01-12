@@ -32,7 +32,7 @@ for i in range(replication):
     os.chdir(path1)
     os.system("start /B make data-cleanup & make & .\COVID19")
 
-path2 = path + 'plot'
+path2 = root_directory+ '\\' + 'plot'
 try:
     os.chdir(path2)
 except:

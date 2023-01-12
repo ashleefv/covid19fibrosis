@@ -36,7 +36,7 @@ antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytoki
 * covid19fibrosis/Analysis/ folder contains files used to extract data and perform analysis
 
 ### Scripts for analysis
-* Single_run.py This file run, extract data, and plot for a single run.
+* Single_run.py This file run, extract data, and plot for a single simulation.
 
 * create_replications.py This file runs replications of the model.
 
