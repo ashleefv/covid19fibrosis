@@ -24,6 +24,7 @@ collagen_area = np.zeros(replication)
 
 path = root_directory+ '\\' + group + '\\'
 
+os.chdir(path)
 path2 = path + 'plot'
 try:
     os.chdir(path2)

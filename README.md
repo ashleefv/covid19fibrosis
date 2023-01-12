@@ -33,7 +33,7 @@ antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytoki
 
 * Data structure for output files is available at http://physicell.org/physicell-tools-python-loader/ 
 
-* covid19fibrosis/Analysis/ folder contains files used to extract data and perform analysis
+* covid19fibrosis/Analysis folder contains files used to extract data and perform analysis
 
 ### Scripts for analysis
 * Single_run.py This file run, extract data, and plot for a single simulation.
@@ -54,9 +54,9 @@ antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytoki
 ### Plot Replication
 The folder "Template of in silico experiments" contains template code for all the cases. 
 
-For a single simulaion, a template code and Single_run file is placed same folder. The output is generated in a folder named plot.
+For a single simulaion, a template code and Single_run file is placed in the same folder. The output is generated in a folder named plot.
 
-For multiple simulation, First, create_replications.py file is used to generate 15 replications. Then Analysis.py file is run to extract the output data. After that, mean_response_of_replications.py file is used to plot mean responses from different cases.
+For multiple simulation, first, create_replications.py file is used to generate 15 replications. Then Analysis.py file is run to extract the output data. After that, mean_response_of_replications.py file is used to plot mean responses from different cases.
 
 ### Figure 2
 ![Figure 2](/Figures/Fig2.png)
