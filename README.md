@@ -36,6 +36,8 @@ antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytoki
 * covid19fibrosis/Analysis/ folder contains files used to extract data and perform analysis
 
 ### Scripts for analysis
+* Single_run.py This file run, extract data, and plot for a single run.
+
 * create_replications.py This file runs replications of the model.
 
 * Analysis.py This file plots the cells and substrate dynamics from replications.
@@ -50,7 +52,11 @@ antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytoki
 
 
 ### Plot Replication
-The folder "Template of in silico experiments" contains template code for all the cases. First, create_replications.py file is used to generate 15 replications. Then Analysis.py file is run to extract the output data. After that, mean_response_of_replications.py file is used to plot mean responses from different cases.
+The folder "Template of in silico experiments" contains template code for all the cases. 
+
+For a single simulaion, a template code and Single_run file is placed same folder. The output is generated in a folder named plot.
+
+For multiple simulation, First, create_replications.py file is used to generate 15 replications. Then Analysis.py file is run to extract the output data. After that, mean_response_of_replications.py file is used to plot mean responses from different cases.
 
 ### Figure 2
 ![Figure 2](/Figures/Fig2.png)

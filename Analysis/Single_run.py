@@ -12,17 +12,25 @@ from pylab import  array, linspace, subplots
 
 ######### user input #############
 group = 'DM'
-replication = 15
+replication = 1
 
 root_directory = os.getcwd()
 try:
     os.chdir(group)
 except:
-    print('No folder found! Add a template directory and run simulation file')
-
-collagen_area = np.zeros(replication)
+    print('Add a template directory for simulation')
 
 path = root_directory+ '\\' + group + '\\'
+
+for i in range(replication):
+    itc = i + 1
+    os.chdir(path)
+    new_simulation = 'cp -rf template ' + str(itc)
+    os.system(new_simulation)
+
+    path1 = path + str(itc)
+    os.chdir(path1)
+    os.system("start /B make data-cleanup & make & .\COVID19")
 
 path2 = path + 'plot'
 try:
@@ -30,18 +38,8 @@ try:
 except:
     os.mkdir('plot')
 
-pathC = path + 'Collagen_contour'
-try:
-    os.chdir(pathC)
-except:
-    os.mkdir('Collagen_contour')
 
-os.chdir(root_directory)
-pathCV = root_directory +'\\' + 'Collagen_violin'
-try:
-    os.chdir(pathCV)
-except:
-    os.mkdir('Collagen_violin')
+collagen_area = np.zeros(replication)
 
 for replication in range(replication):
     itc = replication + 1
@@ -164,11 +162,55 @@ for replication in range(replication):
 
 
     cell1 = np.array([CD8, macrophage, secreting_agent, fibroblast, uninfected, infected, dead, TGF, collagen, M1, M2, MI, MH, ME])
-
+    time = t / (60 * 24)
 
     os.chdir(path2)
-    pickle.dump(t / (60 * 24), open('time.p', 'wb'))
-    pickle.dump(cell1, open('cell'+str(itc)+'.p', 'wb'))
+    plt.rcParams.update({'font.size': 25})
+
+    # cell population
+    plt.plot(time, CD8, label='CD8+ T', linewidth=2)
+    plt.plot(time, macrophage, label='Macrophage', linewidth=2)
+    plt.plot(time, secreting_agent, label='Secreting agent', linewidth=2)
+    plt.plot(time, fibroblast, label='Fibroblast', linewidth=2)
+
+    plt.legend(loc='upper left', prop={"size": 15}, ncol=2)
+    plt.xlabel('Time (day)')
+    plt.ylabel('Number of Cells')
+    # plt.ylim([-20,450])
+    plt.savefig("cell.png", dpi=300, bbox_inches='tight')
+    plt.show()
+
+    # Macrophages
+    plt.plot(time, macrophage, label='Total', linewidth=2)
+    plt.plot(time, MI, label='MI', linewidth=2)
+    plt.plot(time, M1, label='M1', linewidth=2)
+    plt.plot(time, M2, label='M2', linewidth=2)
+    plt.plot(time, MH, label='MH', linewidth=2)
+    plt.plot(time, ME, label='ME', linewidth=2)
+
+    plt.legend(loc='upper left', prop={"size": 15}, ncol=3)
+    plt.xlabel('Time (day)')
+    plt.ylabel('Number of Cells')
+    # plt.ylim([-30,600])
+    plt.savefig("cell1.png", dpi=300, bbox_inches='tight')
+    plt.show()
+
+    # TGF-beta
+    plt.plot(time, TGF, label='r', linewidth=2)
+    plt.xlabel('Time (day)')
+    plt.ylabel('TGF-β ($ng/mL$)')
+    # plt.ylim([-0.25,11])
+    plt.savefig("TGF.png", dpi=300, bbox_inches='tight')
+    plt.show()
+
+    # collagen mean of voxels
+    plt.plot(time, collagen, linewidth=2)
+    plt.xlabel('Time (day)')
+    plt.ylabel('Collagen ($μg/μm^3$)')
+    # plt.ylim([-0.25e-8,11e-8])
+    plt.savefig("collagen.png", dpi=300, bbox_inches='tight')
+    plt.show()
+
 
     os.chdir(path1)
     # Seaborn heatmap
@@ -215,11 +257,6 @@ for replication in range(replication):
     plt.xticks(np.arange(0, 42, step=5))
     plt.yticks(np.arange(0, 42, step=5))
 
-    os.chdir(pathC)
+    os.chdir(path2)
     plt.savefig(group + str(itc)+".png", dpi=300, bbox_inches='tight')
-    plt.clf()
-
-
-os.chdir(pathCV)
-
-pickle.dump(collagen_area, open('CV'+group+'.p', 'wb'))
+    plt.show()
