@@ -49,5 +49,8 @@ antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytoki
 
 * Analysis.py This file plots the cells and substrate dynamics from replications.
 
+### Figure 2
+![Figure 2](/Figures/Fig2.png)
+
 ## Acknowledgements
 Research reported in this publication was supported by the National Institute of General Medical Sciences of the National Institutes of Health under award number R35GM133763. The content is solely the responsibility of the authors and does not necessarily represent the offcial views of the National Institutes of Health.
