@@ -197,7 +197,7 @@ int main( int argc, char* argv[] )
 			// save data if it's time. 
 			if( fabs( PhysiCell_globals.current_time - PhysiCell_globals.next_full_save_time ) < 0.01 * diffusion_dt )
 			{
-				//display_simulation_status( std::cout );
+				display_simulation_status( std::cout );
 				if( PhysiCell_settings.enable_legacy_saves == true )
 				{	
 					log_output( PhysiCell_globals.current_time , PhysiCell_globals.full_output_index, microenvironment, report_file);
@@ -296,42 +296,7 @@ int main( int argc, char* argv[] )
 	// timer 
 	
 	std::cout << std::endl << "Total simulation runtime: " << std::endl; 
-	BioFVM::display_stopwatch_value( std::cout , BioFVM::runtime_stopwatch_value() ); 
-
-
-	
-	extern int recruited_neutrophils; 
-	extern int recruited_Tcells; 
-	extern int recruited_macrophages; 
-	
-	extern double first_macrophage_recruitment_time;
-	extern double first_neutrophil_recruitment_time; 
-	extern double first_CD8_T_cell_recruitment_time; 
-
-	std::cout << std::endl; 
-	std::cout << "recruited macrophages: " << recruited_macrophages << " starting at time " 
-		<< first_macrophage_recruitment_time <<	std::endl; 
-	std::cout << "recruited neutrophils: " << recruited_neutrophils << " starting at time " 
-		<< first_neutrophil_recruitment_time << std::endl; 
-	std::cout << "recruited T cells: " << recruited_Tcells << " starting at time "
-		<< first_CD8_T_cell_recruitment_time << std::endl << std::endl; 	
-	recruited_neutrophils = 0; 
-	recruited_Tcells = 0; 
-	recruited_macrophages = 0; 
-
-	for( int n =0 ; n < (*all_cells).size() ; n++ )
-	{
-		Cell* pC = (*all_cells)[n]; 
-		if( pC->type == 5 )
-		{ recruited_neutrophils++; }
-		if( pC->type == 3 )
-		{ recruited_Tcells++; }
-		if( pC->type == 4 )
-		{ recruited_macrophages++; }
-	}
-	std::cout << "remaining macrophages: " << recruited_macrophages << std::endl; 
-	std::cout << "remaining neutrophils: " << recruited_neutrophils << std::endl; 
-	std::cout << "remaining T cells: " << recruited_Tcells << std::endl; 
+	BioFVM::display_stopwatch_value( std::cout , BioFVM::runtime_stopwatch_value() );
 	
 	return 0; 
 }
