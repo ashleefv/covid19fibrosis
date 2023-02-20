@@ -13,8 +13,7 @@ University at Buffalo, The State University of New York.
 Corresponding author: A. N. Ford Versypt, ashleefv@buffalo.edu
 
 ### Scripts for model
-* covid19fibrosis/COVID19-0.5.0-tissue_damage/config/PhysiCell_settings.xml This file contains the model parameters. We changed the following parameters to perform case studies.
-antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytokine_secretion_rate_by_macrophage, and death_rate of residual (secreting agents). The corresponding highlighted c++ code block are available at [^1].
+* covid19fibrosis/COVID19-0.5.0-tissue_damage/config/PhysiCell_settings.xml This file contains the model parameters. We changed parameters: antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytokine_secretion_rate_by_macrophage, and death_rate of residual (secreting agents). The corresponding highlighted c++ code block are available at [^1].
 
 * covid19fibrosis/COVID19-0.5.0-tissue_damage/custom_modules/epithelium_submodel.cpp This file contains the rule for epithelial cells. The death of an infected epithelial cell creates a secreting agent at the time and location of cell death. The corresponding highlighted c++ code block are available at [^2].
 
