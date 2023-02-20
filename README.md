@@ -1,7 +1,7 @@
 # covid19fibrosis
 
 ## Overview 
-The mathematical model describes the role of TGF-β in the progression of lung fibrosis in COVID19 patients.
+The mathematical model describes the role of TGF-β in the progression of lung fibrosis in COVID-19 patients.
 
 ## An agent-based modeling approach for lung fibrosis in response to COVID-19
 
@@ -13,9 +13,7 @@ University at Buffalo, The State University of New York.
 Corresponding author: A. N. Ford Versypt, ashleefv@buffalo.edu
 
 ### Scripts for model
-
-* covid19fibrosis/COVID19-0.5.0-tissue_damage/config/PhysiCell_settings.xml
-This file contains the model parameters. We changed the following parameters to perform case studies.
+* covid19fibrosis/COVID19-0.5.0-tissue_damage/config/PhysiCell_settings.xml This file contains the model parameters. We changed the following parameters to perform case studies.
 antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytokine_secretion_rate_by_macrophage, and death_rate of residual (secreting agents). The corresponding highlighted c++ code block are available at [^1].
 
 * covid19fibrosis/COVID19-0.5.0-tissue_damage/custom_modules/epithelium_submodel.cpp This file contains the rule for epithelial cells. The death of an infected epithelial cell creates a secreting agent at the time and location of cell death. The corresponding highlighted c++ code block are available at [^2].
@@ -28,7 +26,7 @@ antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytoki
 [^2]: https://github.com/ashleefv/covid19fibrosis/blob/master/Highlighted%20c%2B%2B%20code%20block/epithelium_submodel.ipynb
 [^3]: https://github.com/ashleefv/covid19fibrosis/blob/master/Highlighted%20c%2B%2B%20code%20block/immune_submodels.ipynb
 
-### Set up of simulation environment, output, and analysis
+### Setting up of simulation environment
 * Install PhysiCell following the instruction at https://github.com/MathCancer/PhysiCell/blob/master/documentation/Quickstart.md. 
 
 * The folder "Template of in silico experiments" [^4] contains template code for all the cases.
@@ -60,4 +58,4 @@ antiinflammatory_cytokine_secretion_rate_by_damagedSite, antiinflammatory_cytoki
 [^9]: https://github.com/ashleefv/covid19fibrosis/blob/master/Analysis/TGF_beta_fibroblast_collagen_fitting.ipynb
 
 ## Acknowledgements
-Research reported in this publication was supported by the National Institute of General Medical Sciences of the National Institutes of Health under award number R35GM133763. The content is solely the responsibility of the authors and does not necessarily represent the offcial views of the National Institutes of Health.
+Research reported in this publication was supported by the National Institute of General Medical Sciences of the National Institutes of Health under award number R35GM133763. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health.
