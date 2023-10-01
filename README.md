@@ -33,7 +33,7 @@ Corresponding author: A. N. Ford Versypt, ashleefv@buffalo.edu
 
 * TGF_beta_fibroblast_collagen_fitting.ipynb This file showed the fitting of TGF-β-dependent fibroblast recruitment [^6].
 
-* Validation.ipynb This file show Model validation with experimental data of TGF-β, collagen, macrophages [^7].
+* Validation.ipynb This file show model validation with experimental data of TGF-β, collagen, and macrophages [^7].
 
 [^2]: https://github.com/ashleefv/covid19fibrosis/tree/master/Template%20of%20in%20silico%20experiments
 [^3]: https://github.com/ashleefv/covid19fibrosis/blob/master/Analysis/create_replications.ipynb
