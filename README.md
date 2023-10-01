@@ -19,7 +19,7 @@ Corresponding author: A. N. Ford Versypt, ashleefv@buffalo.edu
 * All simulations are performed using PhysiCell version 1.7.2beta. 
 
 
-### 2. Running simulation, output, and analysis
+### 2. Running simulation, output, analysis, and validation
 
 * The folder "Template of in silico experiments" [^2] contains template code for all the cases.
 
@@ -33,25 +33,27 @@ Corresponding author: A. N. Ford Versypt, ashleefv@buffalo.edu
 
 * TGF_beta_fibroblast_collagen_fitting.ipynb This file showed the fitting of TGF-β-dependent fibroblast recruitment [^6].
 
+* Validation.ipynb This file show Model validation with experimental data of TGF-β, collagen, macrophages [^7].
+
 [^2]: https://github.com/ashleefv/covid19fibrosis/tree/master/Template%20of%20in%20silico%20experiments
 [^3]: https://github.com/ashleefv/covid19fibrosis/blob/master/Analysis/create_replications.ipynb
 [^4]: https://github.com/ashleefv/covid19fibrosis/blob/master/Analysis/Multi_run_analysis.ipynb
 [^5]: https://github.com/ashleefv/covid19fibrosis/blob/master/Analysis/Collagen_violin_plot.ipynb
 [^6]: https://github.com/ashleefv/covid19fibrosis/blob/master/Analysis/TGF_beta_fibroblast_collagen_fitting.ipynb
-
+[^7]: https://github.com/ashleefv/covid19fibrosis/blob/master/Analysis/Validation/Validation.ipynb
 
 ### 3. Model scripts and code blocks to update parameters and rules
-* config/PhysiCell_settings.xml This file contains the model parameters. The C++ code blocks and corresponding line numbers for the fibrosis model are available at [^7].
+* config/PhysiCell_settings.xml This file contains the model parameters. The C++ code blocks and corresponding line numbers for the fibrosis model are available at [^8].
 
-* custom_modules/epithelium_submodel.cpp This file contains the function and rules for epithelial cells. The C++ code blocks and corresponding line numbers are available at [^8].
+* custom_modules/epithelium_submodel.cpp This file contains the function and rules for epithelial cells. The C++ code blocks and corresponding line numbers are available at [^9].
 
-* custom_modules/immune_submodels.cpp This file contains the rules for macrophages, fibroblasts, and activation of latent TGF-β from damaged sites. The C++ code blocks and corresponding line numbers are available at [^9].
+* custom_modules/immune_submodels.cpp This file contains the rules for macrophages, fibroblasts, and activation of latent TGF-β from damaged sites. The C++ code blocks and corresponding line numbers are available at [^10].
 
 * Other parts of the code are the same as the previous release: https://github.com/pc4covid19/pc4covid19/releases/tag/v5.0
 
-[^7]: https://github.com/ashleefv/covid19fibrosis/blob/master/Highlighted%20c%2B%2B%20code%20block/PhysiCell_settings.ipynb
-[^8]: https://github.com/ashleefv/covid19fibrosis/blob/master/Highlighted%20c%2B%2B%20code%20block/epithelium_submodel.ipynb
-[^9]: https://github.com/ashleefv/covid19fibrosis/blob/master/Highlighted%20c%2B%2B%20code%20block/immune_submodels.ipynb
+[^8]: https://github.com/ashleefv/covid19fibrosis/blob/master/Highlighted%20c%2B%2B%20code%20block/PhysiCell_settings.ipynb
+[^9]: https://github.com/ashleefv/covid19fibrosis/blob/master/Highlighted%20c%2B%2B%20code%20block/epithelium_submodel.ipynb
+[^10]: https://github.com/ashleefv/covid19fibrosis/blob/master/Highlighted%20c%2B%2B%20code%20block/immune_submodels.ipynb
 
 
 
